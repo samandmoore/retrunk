@@ -1,0 +1,18 @@
+<table>
+  <thead>
+    <tr>
+      <th>Repo</th>
+      <th>Default branch</th>
+      <th>Can change?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render(partial: 'repo', collection: repos, as: :repo) %>
+  </tbody>
+</table>
+
+<%# <%= paginate repos %1> %>
+
+<% if repos.empty? %>
+  <p>No repos to see here.</p>
+<% end %>

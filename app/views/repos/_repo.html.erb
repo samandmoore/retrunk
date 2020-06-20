@@ -1,0 +1,20 @@
+<tr>
+  <td>
+    <%= repo.full_name %>
+  </td>
+  <td>
+    <%= repo.default_branch %>
+  </td>
+  <td>
+    <%= repo.permissions.admin? ? 'Yep' : 'Nope' %>
+  </td>
+  <td>
+    <% if repo.permissions.admin? %>
+      <%= link_to new_conversion_path(owner: repo.owner.login, name: repo.name) do %>
+        Convert
+      <% end %>
+    <% else %>
+        --
+    <% end %>
+  </td>
+</tr>
