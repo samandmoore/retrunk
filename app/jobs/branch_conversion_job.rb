@@ -8,5 +8,6 @@ class BranchConversionJob < ApplicationJob
 
     # perhaps delay this for a few days so no one can push it back up?
     # BranchConversion::DeleteOldBranch.new(branch_conversion: branch_conversion).save!
+    BranchConversion::Complete.new(branch_conversion: branch_conversion).save!
   end
 end
