@@ -1,4 +1,6 @@
 class BranchConversion < ApplicationRecord
+  include SteadyState
+
   belongs_to :user
 
   validates :repo_full_name, :old_default_branch_name, :new_default_branch_name, presence: true

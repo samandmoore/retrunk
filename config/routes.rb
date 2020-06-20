@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   resources :repos, only: [:index]
 
   scope 'repos/:owner/:name' do
-    resource :conversion, only: [:new, :create]
+    resource :conversion, only: [:show, :new, :create]
   end
 
   root to: 'repos#index'

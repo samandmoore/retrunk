@@ -29,6 +29,8 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'octokit'
 gem 'kaminari'
 gem 'steady_state'
+gem 'delayed_job'
+gem 'delayed_job_active_record'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

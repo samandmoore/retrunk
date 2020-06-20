@@ -1,7 +1,7 @@
 class BranchConversion::ChangeDefaultBranch
   include ActiveModel::Model
 
-  attr_reader :branch_conversion
+  attr_accessor :branch_conversion
 
   def save!
     github = Github.for_user(branch_conversion.user)

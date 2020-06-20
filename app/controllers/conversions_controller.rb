@@ -1,4 +1,13 @@
 class ConversionsController < ApplicationController
+  def show
+    github_repo = Github.for_user(current_user)
+      .repo_by_name(owner: name_params[:owner], name: name_params[:name])
+
+    repo = RepoOverview.new(repo: github_repo)
+
+    render :show, locals: { repo: repo }
+  end
+
   def new
     repo = Github.for_user(current_user)
       .repo_by_name(owner: name_params[:owner], name: name_params[:name])
@@ -17,7 +26,10 @@ class ConversionsController < ApplicationController
       new_default_branch_name: 'main'
     )
 
-    BranchConversion::Start.new(branch_conversion: branch_conversion).save!
+    BranchConversion::Start.new(branch_conversion: conversion).save!
+
+    flash[:info] = "Started conversion for #{repo.full_name}"
+    redirect_to repos_path
   end
 
   private

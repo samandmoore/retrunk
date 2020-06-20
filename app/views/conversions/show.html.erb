@@ -1,0 +1,6 @@
+<p>
+  We're converting <%= repo.full_name %>'s default branch
+  from <em><%= repo.conversion.old_default_branch_name %></em> to <strong><%= repo.conversion.new_default_branch_name %></strong>
+</p>
+
+<p><strong>Current Step:</strong> <%= repo.conversion.status.humanize %></p>

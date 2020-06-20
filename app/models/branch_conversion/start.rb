@@ -1,7 +1,7 @@
 class BranchConversion::Start
   include ActiveModel::Model
 
-  attr_reader :branch_conversion
+  attr_accessor :branch_conversion
 
   delegate :transaction, to: ApplicationRecord
 
