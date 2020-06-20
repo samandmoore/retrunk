@@ -17,6 +17,28 @@ class Github
     client.repo("#{owner}/#{name}")
   end
 
+  def get_branch_current_sha(repo_full_name:, branch_name:)
+    client.ref(
+      repo_full_name,
+      "heads/#{branch_name}"
+    ).object.sha
+  end
+
+  def create_branch(repo_full_name:, branch_name:, sha:)
+    client.create_ref(
+      repo_full_name,
+      "heads/#{branch_name}",
+      sha
+    )
+  end
+
+  def change_default_branch(repo_full_name:, branch_name:)
+    client.edit_repository(
+      repo_full_name,
+      default_branch: branch_name
+    )
+  end
+
   private
 
   def client
