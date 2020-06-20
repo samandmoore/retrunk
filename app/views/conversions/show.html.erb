@@ -1,6 +1,35 @@
-<p>
-  We're converting <%= repo.full_name %>'s default branch
-  from <em><%= repo.conversion.old_default_branch_name %></em> to <strong><%= repo.conversion.new_default_branch_name %></strong>
-</p>
+<% if repo.conversion_complete? %>
+  <p>
+    Awesome. You're done.
+  </p>
 
-<p><strong>Current Step:</strong> <%= repo.conversion.status.humanize %></p>
+  <p>
+    Don't forget to update your local checkouts!
+  </p>
+  <pre>
+    <code>
+git checkout master
+git branch -m master main
+git fetch
+git branch --unset-upstream
+git branch -u origin/main
+git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/main
+    </code>
+  </pre>
+<% elsif repo.conversion_in_progress? %>
+  <p>
+    We're converting <%= repo.full_name %>'s default branch
+    from <em><%= repo.conversion.old_default_branch_name %></em> to <strong><%= repo.conversion.new_default_branch_name %></strong>
+  </p>
+
+  <p><strong>Current Step:</strong> <%= repo.conversion.status.humanize %></p>
+<% else %>
+  <p>
+    Awesome. Let's convert <%= repo.full_name %>'s default branch
+    from <em><%= repo.default_branch %></em> to <strong>main</strong>
+  </p>
+
+  <%= button_to conversion_path(owner: repo.owner, name: repo.name), method: :post do %>
+    Convert
+  <% end %>
+<% end %>

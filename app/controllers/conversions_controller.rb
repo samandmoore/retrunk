@@ -8,13 +8,6 @@ class ConversionsController < ApplicationController
     render :show, locals: { repo: repo }
   end
 
-  def new
-    repo = Github.for_user(current_user)
-      .repo_by_name(owner: name_params[:owner], name: name_params[:name])
-
-    render :new, locals: { repo: repo }
-  end
-
   def create
     repo = Github.for_user(current_user)
       .repo_by_name(owner: name_params[:owner], name: name_params[:name])

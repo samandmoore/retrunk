@@ -1,8 +1,0 @@
-<p>
-  Awesome. Let's convert <%= repo.full_name %>'s default branch
-  from <em><%= repo.default_branch %></em> to <strong>main</strong>
-</p>
-
-<%= button_to conversion_path(owner: repo.owner.login, name: repo.name), method: :post do %>
-  Convert
-<% end %>

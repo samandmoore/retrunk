@@ -28,11 +28,11 @@ class RepoOverview
   end
 
   def convertible?
-    admin? && !conversion_in_progress?
+    admin? && !(conversion_in_progress? || conversion_complete?)
   end
 
   def conversion_in_progress?
-    conversion.present?
+    conversion.present? && !conversion_complete?
   end
 
   def conversion_complete?

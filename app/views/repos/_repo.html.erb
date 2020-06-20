@@ -1,6 +1,8 @@
 <tr>
   <td>
-    <%= repo.full_name %>
+    <%= link_to "https://github.com/#{repo.full_name}" do %>
+      <%= repo.full_name %>
+    <% end %>
   </td>
   <td>
     <%= repo.default_branch %>
@@ -13,7 +15,7 @@
   </td>
   <td>
     <% if repo.convertible? %>
-      <%= link_to new_conversion_path(owner: repo.owner, name: repo.name) do %>
+      <%= link_to conversion_path(owner: repo.owner, name: repo.name) do %>
         Convert
       <% end %>
     <% elsif repo.conversion_in_progress? %>
@@ -21,7 +23,9 @@
         🔄 (view)
       <% end %>
     <% elsif repo.conversion_complete? %>
-      ✅
+      <%= link_to conversion_path(owner: repo.owner, name: repo.name) do %>
+        ✅ (view)
+      <% end %>
     <% else %>
       --
     <% end %>
