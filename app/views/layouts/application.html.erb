@@ -10,6 +10,12 @@
   </head>
 
   <body>
+    <h1>Remainline</h1>
+    <h3>convert your default branch to "main"</h3>
+    <nav>
+      <%= link_to_unless_current "Repos", repos_path %>
+    </nav>
+    <hr />
     <%= yield %>
   </body>
 </html>

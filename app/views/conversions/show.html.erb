@@ -1,3 +1,4 @@
+<h2><%= repo.full_name %></h2>
 <% if repo.conversion_complete? %>
   <p>
     Awesome. You're done.
@@ -6,10 +7,10 @@
   <p>
     Don't forget to update your local checkouts!
   </p>
-  <pre>
+  <pre style="background: #f5f5f5;">
     <code>
-git checkout master
-git branch -m master main
+git checkout <%= repo.conversion.old_default_branch_name %>
+git branch -m <%= repo.conversion.old_default_branch_name %> main
 git fetch
 git branch --unset-upstream
 git branch -u origin/main
@@ -23,7 +24,7 @@ git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/main
   </p>
 
   <p><strong>Current Step:</strong> <%= repo.conversion.status.humanize %></p>
-<% else %>
+<% elsif repo.convertible? %>
   <p>
     Awesome. Let's convert <%= repo.full_name %>'s default branch
     from <em><%= repo.default_branch %></em> to <strong>main</strong>
@@ -32,4 +33,6 @@ git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/main
   <%= button_to conversion_path(owner: repo.owner, name: repo.name), method: :post do %>
     Convert
   <% end %>
+<% else %>
+  <%= repo.full_name %> is not convertible.
 <% end %>
