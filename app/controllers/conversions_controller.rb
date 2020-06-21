@@ -1,9 +1,7 @@
 class ConversionsController < ApplicationController
   def show
-    github_repo = Github.for_user(current_user)
+    repo = Github.for_user(current_user)
       .repo_by_name(owner: name_params[:owner], name: name_params[:name])
-
-    repo = RepoOverview.new(repo: github_repo)
 
     render :show, locals: { repo: repo }
   end

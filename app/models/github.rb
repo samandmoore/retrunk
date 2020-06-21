@@ -9,12 +9,23 @@ class Github
     new(access_token: user.github_oauth_token)
   end
 
-  def repos
-    client.repos
+  def repos(page: nil)
+    repos = if page.present?
+      client.repos(nil, page: page)
+    else
+      client.repos
+    end
+    more_pages = client.last_response.rels[:next].present?
+    current_page = page.presence || 1
+    RepoCollection.new(
+      repos: repos.map { |r| Repo.new(repo: r) },
+      current_page: current_page,
+      more_pages: more_pages
+    )
   end
 
   def repo_by_name(owner:, name:)
-    client.repo("#{owner}/#{name}")
+    Repo.new(repo: client.repo("#{owner}/#{name}"))
   end
 
   def get_branch_current_sha(repo_full_name:, branch_name:)
@@ -36,6 +47,33 @@ class Github
     client.edit_repository(
       repo_full_name,
       default_branch: branch_name
+    )
+  end
+
+  def branch_exists?(repo_full_name:, branch_name:)
+    client.branch(
+      repo_full_name,
+      branch_name
+    )
+    true
+  rescue Octokit::NotFound
+    false
+  end
+
+  def delete_branch(repo_full_name:, branch_name:)
+    client.delete_branch(
+      repo_full_name,
+      branch_name
+    )
+    true
+  rescue Octokit::UnprocessableEntity => e
+    e.message =~ /Reference does not exist/
+  end
+
+  def unprotect_branch(repo_full_name:, branch_name:)
+    client.unprotect_branch(
+      repo_full_name,
+      branch_name
     )
   end
 

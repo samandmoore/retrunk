@@ -15,5 +15,23 @@ class BranchConversion < ApplicationRecord
     state 'default_branch_changed', from: 'changing_default_branch'
 
     state 'completed', from: 'default_branch_changed'
+
+    state 'unprotecting_old_default_branch', from: 'completed'
+    state 'old_default_branch_unprotected', from: 'unprotecting_old_default_branch'
+
+    state 'deleting_old_default_branch', from: 'old_default_branch_unprotected'
+    state 'old_default_branch_deleted', from: 'deleting_old_default_branch'
+
+    state 'cleanup_completed', from: 'old_default_branch_deleted'
+  end
+
+  def old_default_branch_exists?
+    github.branch_exists?(repo_full_name: repo_full_name, branch_name: old_default_branch_name)
+  end
+
+  private
+
+  def github
+    @github ||= Github.for_user(user)
   end
 end

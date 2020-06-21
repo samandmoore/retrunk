@@ -12,7 +12,10 @@
   </tbody>
 </table>
 
-<%# <%= paginate repos %1> %>
+<p>
+  <%= link_to_unless(repos.first_page?, "Previous", repos_path(page: repos.previous_page)) %>
+  <%= link_to_unless(repos.last_page?, "Next", repos_path(page: repos.next_page)) %>
+</p>
 
 <% if repos.empty? %>
   <p>No repos to see here.</p>

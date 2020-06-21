@@ -1,4 +1,4 @@
-class RepoOverview
+class Repo
   def initialize(repo:)
     @repo = repo
   end
@@ -28,7 +28,7 @@ class RepoOverview
   end
 
   def convertible?
-    admin? && !(conversion_in_progress? || conversion_complete?)
+    admin? && default_branch != "main" && !(conversion_in_progress? || conversion_complete?)
   end
 
   def conversion_in_progress?
@@ -36,7 +36,7 @@ class RepoOverview
   end
 
   def conversion_complete?
-    conversion&.completed? || false
+    conversion&.completed? || conversion&.cleanup_completed? || false
   end
 
   def conversion
