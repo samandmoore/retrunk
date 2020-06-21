@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   private
 
   def set_sentry_context
-    Raven.user_context(id: current_user_id)
+    Raven.user_context(id: current_user&.id)
     Raven.extra_context(params: params.to_unsafe_h, url: request.url)
   end
 end
