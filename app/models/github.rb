@@ -75,6 +75,9 @@ class Github
       repo_full_name,
       branch_name
     )
+    true
+  rescue Octokit::ClientError => e
+    e.message =~ /Branch not protected/
   end
 
   private
