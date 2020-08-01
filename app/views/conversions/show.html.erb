@@ -11,7 +11,7 @@
     <code>
 git checkout <%= repo.conversion.old_default_branch_name %>
 git branch -m <%= repo.conversion.old_default_branch_name %> main
-git fetch
+git fetch --prune
 git branch --unset-upstream
 git branch -u origin/main
 git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/main
